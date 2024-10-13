@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login & Registration</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      position: relative;
+      width: 70vw;
+      max-height: 85vh; /* Set maximum height */
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      overflow: hidden; /* Hide overflow */
+      display: flex;
+      flex-direction: column; /* Stack elements vertically */
+    }
+
+    .form-container {
+      padding: 20px; /* Add padding to the form container */
+      width: 100%;
+      overflow-y: auto; /* Enable vertical scrolling */
+    }
+
+    .form-container h2 {
+      font-size: 35px;
+      color: #060725;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .input-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .half-width {
+      flex: 1;
+    }
+
+    .half-width input {
+      width: 100%;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .radio-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .radio-group label {
+      margin-left: 5px; /* Space between radio and label */
+      margin-right: 25px; /* Space between each radio label */
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #060725;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background-color: #0a0c47;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    a {
+      color: #4b4fc1;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .notification {
+      background-color: #eeeeee;
+      padding: 10px;
+      text-align: center;
+      color: red;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .input-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="row"  style="background-color: #70A9A1;">
+    <div class="container" >
+      <div class="form-container"  style="background-color: #f5f5f5;">
+        <h2 id="form-title">Sign In</h2>
+        <form id="authForm" onsubmit="handleFormSubmit(event)">
+          <div id="nameRow" class="input-row" style="display: none;">
+            <div class="input-group half-width">
+              <label for="firstName">First Name</label>
+              <input id="firstName" type="text" placeholder="Enter your first name" />
+            </div>
+            <div class="input-group half-width">
+              <label for="lastName">Last Name</label>
+              <input id="lastName" type="text" placeholder="Enter your last name" />
+            </div>
+          </div>
+
+          <div id="emailRow" class="input-row">
+            <div class="input-group half-width">
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="Enter your email" />
+            </div>
+            <div id="phoneField" class="input-group half-width" style="display: none;">
+              <label for="phone">Phone Number</label>
+              <input id="phone" type="text" placeholder="Enter your phone number" />
+            </div>
+          </div>
+
+          <div id="passwordRow" class="input-row">
+            <div class="input-group half-width">
+              <label for="password">Password</label>
+              <input id="password" type="password" placeholder="Enter your password" />
+            </div>
+            <div class="input-group half-width" id="confirmPasswordField" style="display: none;">
+              <label for="confirmPassword">Confirm Password</label>
+              <input id="confirmPassword" type="password" placeholder="Confirm your password" />
+            </div>
+          </div>
+
+          <div id="collegeField" class="input-group" style="display: none;">
+            <label for="college">College / University</label>
+            <input id="college" type="text" placeholder="Enter your college" />
+          </div>
+
+          <div id="currentStatusField" class="input-group" style="display: none;">
+            <label style="margin-bottom: 0;">Current Status</label>
+            <div class="radio-group">
+              <div>
+                <input type="radio" id="statusProfessor" name="currentStatus" value="Professor" onclick="toggleAdditionalFields()" />
+                <label for="statusProfessor">Professor</label>
+              </div>
+              <div>
+                <input type="radio" id="statusStudent" name="currentStatus" value="Student" onclick="toggleAdditionalFields()" />
+                <label for="statusStudent">Student</label>
+              </div>
+              <div>
+                <input type="radio" id="statusAlumni" name="currentStatus" value="Alumni" onclick="toggleAdditionalFields()" />
+                <label for="statusAlumni">Alumni</label>
+              </div>
+            </div>
+          </div>
+
+          <div id="additionalFields" style="display: none;">
+            <div id="employeeIdField" class="input-group" style="display: none;">
+              <label for="employeeId">Employee ID</label>
+              <input id="employeeId" type="text" placeholder="Enter your employee ID" />
+            </div>
+            <div id="universityRollNoField" class="input-group" style="display: none;">
+              <label for="universityRollNo">University Roll No</label>
+              <input id="universityRollNo" type="text" placeholder="Enter your university roll number" />
+            </div>
+            <div id="passoutYearField" class="input-group" style="display: none;">
+              <label for="passoutYear">Passout Year</label>
+              <input id="passoutYear" type="text" placeholder="Enter your passout year" />
+            </div>
+          </div>
+
+          <button type="submit" class="btn" id="submitButton">Sign In</button>
+          <p>
+            <span id="toggleText">Don't have an account?</span>
+            <a href="#" onclick="toggleForm(event)" id="toggleLink">Sign Up</a>
+          </p>
+        </form>
+      </div>
+    </div>
+    <div class="notification" id="notification" style="display: none;"></div>
+  </div>
+
+  <script>
+    let isSignInMode = true;
+
+    function toggleForm(event) {
+      event.preventDefault();
+      isSignInMode = !isSignInMode;
+
+      const formTitle = document.getElementById('form-title');
+      const nameRow = document.getElementById('nameRow');
+      const confirmPasswordField = document.getElementById('confirmPasswordField');
+      const phoneField = document.getElementById('phoneField');
+      const collegeField = document.getElementById('collegeField');
+      const currentStatusField = document.getElementById('currentStatusField');
+      const toggleText = document.getElementById('toggleText');
+      const toggleLink = document.getElementById('toggleLink');
+      const emailRow = document.getElementById('emailRow');
+      const additionalFields = document.getElementById('additionalFields');
+
+      if (isSignInMode) {
+        formTitle.textContent = 'Sign In';
+        nameRow.style.display = 'none';
+        confirmPasswordField.style.display = 'none';
+        phoneField.style.display = 'none';
+        collegeField.style.display = 'none';
+        currentStatusField.style.display = 'none';
+        additionalFields.style.display = 'none'; // Hide additional fields
+        toggleText.textContent = "Don't have an account?";
+        toggleLink.textContent = 'Sign Up';
+      } else {
+        formTitle.textContent = 'Sign Up';
+        nameRow.style.display = 'flex';
+        confirmPasswordField.style.display = 'block';
+        phoneField.style.display = 'block';
+        collegeField.style.display = 'block';
+        currentStatusField.style.display = 'block';
+        additionalFields.style.display = 'block'; // Show additional fields when signing up
+        toggleText.textContent = 'Already have an account?';
+        toggleLink.textContent = 'Sign In';
+      }
+    }
+
+    function toggleAdditionalFields() {
+      const statusProfessor = document.getElementById('statusProfessor');
+      const statusStudent = document.getElementById('statusStudent');
+      const statusAlumni = document.getElementById('statusAlumni');
+
+      const employeeIdField = document.getElementById('employeeIdField');
+      const universityRollNoField = document.getElementById('universityRollNoField');
+      const passoutYearField = document.getElementById('passoutYearField');
+      const additionalFields = document.getElementById('additionalFields');
+
+      // Hide all additional fields initially
+      employeeIdField.style.display = 'none';
+      universityRollNoField.style.display = 'none';
+      passoutYearField.style.display = 'none';
+
+      // Show specific fields based on the selected radio button
+      if (statusProfessor.checked) {
+        employeeIdField.style.display = 'block'; // Show Employee ID field
+      } else if (statusStudent.checked) {
+        universityRollNoField.style.display = 'block'; // Show University Roll No field
+      } else if (statusAlumni.checked) {
+        universityRollNoField.style.display = 'block'; // Show University Roll No field
+        passoutYearField.style.display = 'block'; // Show Passout Year field
+      }
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      alert('Form submitted!');
+    }
+  </script>
+</body>
+</html>

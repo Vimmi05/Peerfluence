@@ -9,3 +9,6 @@ def Index(request):
     # }
     return render(request, 'website/index.html')
                 #   , context)
+
+def Login(request):
+    return render(request, 'website/login.html')

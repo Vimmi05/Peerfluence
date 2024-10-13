@@ -8,21 +8,34 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+        integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous"/>
+
+        
+
     <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
         body {
-            background-color: #4A90E2; /* Sidebar color */
+            background-color: #70A9A1; /* Sidebar color */
         }
 
         .sidebar {
-            background-color: #4A90E2; /* Same as body */
-            color: white;
+            background-color: #ffffff; /* Same as body */
+            color: black;
         }
 
         .profile-img {
-            width: 80px;
+            width: 90px;
+            height: 70px;
             border-radius: 50%;
         }
 
+        .nav-link{
+            color: black;
+        }
         .stat-card {
             background-color: #0077b5;
             color: white;
@@ -45,31 +58,82 @@
             padding: 20px;
             margin-left: 20px; /* Adjust margin to separate from sidebar */
         }
+        .profession{
+            font-size: 15px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="d-flex">
+    <div class="container-fluid d-flex">
         <!-- Sidebar -->
-        <div class="sidebar p-4 " style="min-width: 250px;">
-            <div class="text-center">
-                <img src="https://example.com/profile-image.jpg" alt="Profile" class="profile-img">
-                <h2 class="h5">Becky Balboa</h2>
-                <p>WWE Superstar</p>
+        <div class="sidebar p-3 col-sm-2 mt-4 mb-4" style="border-radius: 10px; background-color: #f8f9fa;height: 90vh;">
+            <!-- Profile Section -->
+            <div class="text-center mb-4">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHJhbmRvbSUyMHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D" alt="Profile" class="profile-img rounded-circle" style="width: 60px; height: 60px;">
+                <h2 class="h6 mt-2 mb-0">Vimmi Tuli</h2>
+                <p class="text-muted mb-2 small">Student, DAV Institute of Engineering and Technology</p>
             </div>
-            <nav class="nav flex-column">
-                <a class="nav-link text-white" href="#">Facebook</a>
-                <a class="nav-link text-white" href="#">Twitter</a>
-                <a class="nav-link text-white" href="#">Instagram</a>
-                <a class="nav-link text-white" href="#">LinkedIn</a>
-                <a class="nav-link text-white" href="#">YouTube</a>
-                <a class="nav-link text-white" href="#">WhatsApp</a>
+    
+            <!-- Navigation Links -->
+            <nav class="nav flex-column mb-4">
+                <a class="nav-link d-flex align-items-center" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy2-fill mx-2" viewBox="0 0 16 16">
+                        <path d="M12 2h-2v3h2z"/>
+                        <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v13A1.5 1.5 0 0 0 1.5 16h13a1.5 1.5 0 0 0 1.5-1.5V2.914a1.5 1.5 0 0 0-.44-1.06L14.147.439A1.5 1.5 0 0 0 13.086 0zM4 6a1 1 0 0 1-1-1V1h10v4a1 1 0 0 1-1 1zM3 9h10a1 1 0 0 1 1 1v5H2v-5a1 1 0 0 1 1-1"/>
+                      </svg> Saved Items
+                </a>
+                <a class="nav-link d-flex align-items-center" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event-fill mx-2" viewBox="0 0 16 16">
+                        <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5"/>
+                      </svg> Events
+                </a>
             </nav>
-            <div class="logout text-white mt-4" style="cursor: pointer;">Logout</div>
-        </div>
+            
+    
+            <!-- Suggested Connections -->
+            <div class="card border-0 shadow-sm mb-4" style="width: 100%;">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <span>Suggestions for You</span>
+                    <i class="fas fa-info-circle text-muted"></i>
+                </div>
+                <div class="card-body p-2">
+                    <!-- First Suggestion -->
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://coursereport-s3-production.global.ssl.fastly.net/uploads/school/logo/180/original/11188290-461044804062854-1290850627040404888-n.png" class="rounded-circle me-2" style="width: 30px; height: 30px;">
+                        <div class="flex-grow-1">
+                            <p class="mb-0 small">Codecraft</p>
+                        </div>
+                        <button class="btn btn-outline-info btn-sm" style="font-size: 12px; padding: 3px 6px;">+ Follow</button>
+                    </div>
+                    <!-- Second Suggestion -->
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://pbs.twimg.com/profile_images/1562752782565785600/mqyKfrHN_400x400.jpg" class="rounded-circle me-2" style="width: 30px; height: 30px;">
+                        <div class="flex-grow-1">
+                            <p class="mb-0 small">Podfresh</p>
+                        </div>
+                        <button class="btn btn-outline-info btn-sm" style="font-size: 12px; padding: 3px 6px;">+ Follow</button>
+                    </div>
+                    <!-- Third Suggestion -->
+                    <div class="d-flex align-items-center">
+                        <img src="https://yt3.ggpht.com/ytc/AMLnZu_D4RFD8cEcBUZHIxw2MPGANf6mzfnjgVEtSrRPSg=s900-c-k-c0x00ffffff-no-rj" class="rounded-circle me-2" style="width: 30px; height: 30px;">
+                        <div class="flex-grow-1">
+                            <p class="mb-0 small">Navlungo</p>
+                        </div>
+                        <button class="btn btn-outline-info btn-sm" style="font-size: 12px; padding: 3px 6px;">+ Follow</button>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Logout Button -->
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-outline-danger btn-sm">Logout</a>
+            </div>
+      
+    </div>
 
         <!-- Main Content -->
-        <div class="flex-grow-1 p-4">
+        <div class="flex-grow-1 p-4 col-sm-10">
             <div class="main-content">
                 <nav class="navbar navbar-expand-lg navbar-light navbarbg sticky-top d-flex mb-5 border-bottom">
         
@@ -134,61 +198,212 @@
                                         </i>
                                     </a>
                                 </li>
-                                
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="#">
-                                        <img class="rounded-circle text-center" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHJhbmRvbSUyMHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D" style="width: 25px; height: 25px;"/>
-                                        
-                                    </a>
-                                </li>                                                            
+                                                            
                             </ul>
                         </div>
                     </div>
                 </nav>
             
                 <header class="mb-4">
-                    <h1>Welcome back, Becky!</h1>
-                    <p>You have got 80% improved performance on your overall social media posts.</p>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <input type="text" class="form-control content mb-3" placeholder="Launch a Post"/>
+                                <span><button class="mediatext btn btn-light mr-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" width="24" height="24" focusable="false" fill="#70B5F9">
+                                            <path
+                                                d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm1 13a1 1 0 01-.29.71L16 14l-2 2-6-6-4 4V7a1 1 0 011-1h14a1 1 0 011 1zm-2-7a2 2 0 11-2-2 2 2 0 012 2z">
+                                            </path>
+                                        </svg>
+                                        <span class="ml-1 mediatext">
+                                            Photo
+                                        </span>
+                                    </button>
+                                </span>
+                                <span><button class="mediatext btn btn-light mr-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" width="24" height="24" focusable="false" fill="#7FC15E">
+                                            <path
+                                                d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm-9 12V8l6 4z">
+                                            </path>
+                                        </svg><span class="ml-1 mediatext">
+                                            Video
+                                        </span>
+                                    </button>
+                                </span>
+                                <span><button class="mediatext btn btn-light mr-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" width="24" height="24" focusable="false" fill="#E7A33E">
+                                            <path
+                                                d="M3 3v15a3 3 0 003 3h12a3 3 0 003-3V3zm13 1.75A1.25 1.25 0 1114.75 6 1.25 1.25 0 0116 4.75zm-8 0A1.25 1.25 0 116.75 6 1.25 1.25 0 018 4.75zM19 18a1 1 0 01-1 1H6a1 1 0 01-1-1V9h14zm-5.9-3a1 1 0 00-1-1H12a3.12 3.12 0 00-1 .2l-1-.2v-3h3.9v1H11v1.15a3.7 3.7 0 011.05-.15 1.89 1.89 0 012 1.78V15a1.92 1.92 0 01-1.84 2H12a1.88 1.88 0 01-2-1.75 1 1 0 010-.25h1a.89.89 0 001 1h.1a.94.94 0 001-.88z">
+                                            </path>
+                                        </svg><span class="ml-1 mediatext">
+                                            Events
+                                        </span>
+                                    </button>
+                                </span>
+                                <span><button class="mediatext btn btn-light mr-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
+                                            fill="" width="24" height="24" focusable="false" fill="#F5987E">
+                                            <path
+                                                d="M21 3v2H3V3zm-6 6h6V7h-6zm0 4h6v-2h-6zm0 4h6v-2h-6zM3 21h18v-2H3zM13 7H3v10h10z">
+                                            </path>
+                                        </svg><span class="ml-1 mediatext">
+                                            Write Article
+                                        </span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
                 </header>
 
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h2>December 2019</h2>
-                        <div class="chart" style="height: 200px; background-color: #e1e1e1; border-radius: 8px; margin-bottom: 20px;">
-                            <!-- Placeholder for the chart -->
+                <!-- POSTS -->
+                <hr>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <img src="https://media-exp1.licdn.com/dms/image/C4E03AQGiWpTUewQ76Q/profile-displayphoto-shrink_400_400/0/1613923672228?e=1669248000&v=beta&t=CwG-2a-EpNaLNhXLKJZc9wIGyrA587NjE2cM3p9KM48" class="postphoto">
+                        <div class="d-inline-flex flex-column ml-1 align-middle">
+                            <span class="posttext">
+                                <a href="https://www.linkedin.com/in/malan/" target="_blank" style="color: #212529;">
+                                    David J. Malan
+                                </a>
+                            </span>
+                            <span class="profile-desc">
+                                I teach CS50
+                            </span>
+                            <span class="profile-desc">25a
+                                <i class="fas fa-globe-americas fa-sm">
+                                </i>
+                            </span>
                         </div>
-                        <div class="row">
-                            <div class="col text-center">
-                                <div class="stat-card">
-                                    <p class="h4">1256</p>
-                                    <p>New Followers</p>
-                                </div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="stat-card">
-                                    <p class="h4">65.85%</p>
-                                    <p>User Engagement</p>
-                                </div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="stat-card">
-                                    <p class="h4">80K</p>
-                                    <p>Likes</p>
-                                </div>
-                            </div>
+                        <span class="float-right">
+                            <i class="fas fa-ellipsis-h fa-md">
+                            </i>
+                        </span>
+                    </div>
+                    <div>
+                        <p class="card-text m-3 card-desc">
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio assumenda expedita commodi ea iste non corporis dicta doloribus, totam recusandae iure odit natus, illum, veritatis beatae excepturi. Commodi, possimus ut!
+                        </p>
+                        <div>
+                            <img src="https://pbs.twimg.com/media/Em2_xBbXUAEVDx1.jpg" class="card-img-top mb-1"
+                                alt="..." />
+                        </div>
+                        
+                        <div class="card-footer mt-1 text-center">
+                            <span>
+                                <button class="ref btn btn-light p-2">
+                                    <i class="far fa-thumbs-up fa-md" style="font-size: 1.2rem">
+                                        <span class="ml-2 mediatext">
+                                            Like
+                                        </span>
+                                    </i>
+                                </button>
+                            </span>
+                            <span>
+                                <button class="ref btn btn-light p-2 ml-4">
+                                    <i class="far fa-comment fa-md" style="font-size: 1.2rem">
+                                        <span class="ml-2 mediatext">
+                                            Comment
+                                        </span>
+                                    </i>
+                                </button>
+                            </span>
+                            <span>
+                                <button class="ref btn btn-light p-2 ml-4">
+                                    <i class="fas fa-share fa-md" style="font-size: 1.2rem">
+                                        <span class="ml-2 mediatext">
+                                            Share
+                                        </span>
+                                    </i>
+                                </button>
+                            </span>
+                            <span>
+                                <button class="ref btn btn-light p-2 ml-4">
+                                    <i class="fas fa-paper-plane fa-md" style="font-size: 1.2rem">
+                                        <span class="ml-2 mediatext">
+                                            Send
+                                        </span>
+                                    </i>
+                                </button>
+                            </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="comments">
-                    <h3>Comments</h3>
-                    <div class="comment">
-                        <p><strong>rhea_ripley:</strong> Waiting to rip you apart at survivor series</p>
+                <hr>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <img src="https://media-exp1.licdn.com/dms/image/C4E03AQGiWpTUewQ76Q/profile-displayphoto-shrink_400_400/0/1613923672228?e=1669248000&v=beta&t=CwG-2a-EpNaLNhXLKJZc9wIGyrA587NjE2cM3p9KM48" class="postphoto">
+                        <div class="d-inline-flex flex-column ml-1 align-middle">
+                            <span class="posttext">
+                                <a href="https://www.linkedin.com/in/malan/" target="_blank" style="color: #212529;">
+                                    David J. Malan
+                                </a>
+                            </span>
+                            <span class="profile-desc">
+                                I teach CS50
+                            </span>
+                            <span class="profile-desc">25a
+                                <i class="fas fa-globe-americas fa-sm">
+                                </i>
+                            </span>
+                        </div>
+                        <span class="float-right">
+                            <i class="fas fa-ellipsis-h fa-md">
+                            </i>
+                        </span>
                     </div>
-                    <div class="comment">
-                        <p><strong>lanawwe:</strong> Inspiring human, career, woman, first, athlete, wrestler and a lot more</p>
+                    <div>
+                        <p class="card-text m-3 card-desc">
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio assumenda expedita commodi ea iste non corporis dicta doloribus, totam recusandae iure odit natus, illum, veritatis beatae excepturi. Commodi, possimus ut!
+                        </p>
+                        <div>
+                            <img src="https://pbs.twimg.com/media/Em2_xBbXUAEVDx1.jpg" class="card-img-top mb-1"
+                                alt="..." />
+                        </div>
+                        
+                        <div class="card-footer mt-1 text-center">
+                            <span>
+                                <button class="ref btn btn-light p-2">
+                                    <i class="far fa-thumbs-up fa-md" style="font-size: 1.2rem">
+                                        <span class="ml-2 mediatext">
+                                            Like
+                                        </span>
+                                    </i>
+                                </button>
+                            </span>
+                            <span>
+                                <button class="ref btn btn-light p-2 ml-4">
+                                    <i class="far fa-comment fa-md" style="font-size: 1.2rem">
+                                        <span class="ml-2 mediatext">
+                                            Comment
+                                        </span>
+                                    </i>
+                                </button>
+                            </span>
+                            <span>
+                                <button class="ref btn btn-light p-2 ml-4">
+                                    <i class="fas fa-share fa-md" style="font-size: 1.2rem">
+                                        <span class="ml-2 mediatext">
+                                            Share
+                                        </span>
+                                    </i>
+                                </button>
+                            </span>
+                            <span>
+                                <button class="ref btn btn-light p-2 ml-4">
+                                    <i class="fas fa-paper-plane fa-md" style="font-size: 1.2rem">
+                                        <span class="ml-2 mediatext">
+                                            Send
+                                        </span>
+                                    </i>
+                                </button>
+                            </span>
+                        </div>
                     </div>
                 </div>
+
+
+               
             </div>
         </div>
     </div>
