@@ -9,6 +9,8 @@ def Index(request):
     # }
     return render(request, 'website/index.html')
                 #   , context)
+def Profile(request):
+    return render(request, 'website/profile.html')
 
 def Login(request):
     return render(request, 'website/login.html')
