@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login & Registration</title>
+
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+      integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #f5f5f5;
+      }
+
+      .container-1 {
+        position: relative;
+        width: 70vw;
+        max-height: 85vh; /* Set maximum height */
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        overflow: hidden; /* Hide overflow */
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+      }
+
+      .form-container {
+        padding: 20px; /* Add padding to the form container */
+        width: 100%;
+        overflow-y: auto; /* Enable vertical scrolling */
+      }
+
+      .form-container h2 {
+        font-size: 35px;
+        color: #060725;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .input-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .half-width {
+        flex: 1;
+      }
+
+      .half-width input {
+        width: 100%;
+      }
+
+      .input-group {
+        margin-bottom: 15px;
+      }
+
+      .input-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+        margin-left: 7px;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+      }
+
+      .radio-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .radio-group label {
+        margin-left: 5px; /* Space between radio and label */
+        margin-right: 25px; /* Space between each radio label */
+      }
+
+      .btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #70a9a1;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+        border: 1px solid #53867f;
+      }
+
+      .btn:hover {
+        background-color: #4ac2b2;
+        color: white;
+      }
+
+      p {
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      a {
+        color: #4b4fc1;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .notification {
+        background-color: #eeeeee;
+        padding: 10px;
+        text-align: center;
+        color: red;
+        font-weight: bold;
+        margin-top: 15px;
+      }
+
+      .error {
+        color: red;
+        font-size: 0.9em;
+      }
+      .radio-group {
+        display: flex;
+        margin-top: 25px;
+        margin-left: -7rem;
+      }
+
+      @media (max-width: 768px) {
+        .input-row {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row" style="background-color: #70a9a1">
+      <div class="container-1">
+        <div class="form-container" style="background-color: #f5f5f5">
+          <h2 id="form-title" class="mb-3">Sign Up</h2>
+          <form
+            id="authForm"
+            action="{% url 'signup' %}"
+            method="POST"
+            onsubmit="handleFormSubmit(event)"
+          >
+            {% csrf_token %}
+
+            <!-- First Name and Last Name -->
+            <div id="nameRow" class="input-row">
+              <div class="input-group half-width">
+                <label for="first_name">First Name</label>
+                <input
+                  id="first_name"
+                  name="first_name"
+                  type="text"
+                  placeholder="Enter your first name"
+                  required
+                />
+                {% if form.first_name.errors %}
+                <div class="error">{{ form.first_name.errors }}</div>
+                {% endif %}
+              </div>
+              <div class="input-group half-width">
+                <label for="last_name">Last Name</label>
+                <input
+                  id="last_name"
+                  name="last_name"
+                  type="text"
+                  placeholder="Enter your last name"
+                  required
+                />
+                {% if form.last_name.errors %}
+                <div class="error">{{ form.last_name.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Email and Phone Number -->
+            <div id="emailRow" class="input-row">
+              <div class="input-group half-width">
+                <label for="email">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  required
+                />
+                {% if form.email.errors %}
+                <div class="error">{{ form.email.errors }}</div>
+                {% endif %}
+              </div>
+              <div id="phoneField" class="input-group half-width">
+                <label for="phone_number">Phone Number</label>
+                <input
+                  id="phone_number"
+                  name="phone_number"
+                  type="text"
+                  placeholder="Enter your phone number"
+                />
+                {% if form.phone_number.errors %}
+                <div class="error">{{ form.phone_number.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Password and Confirm Password -->
+            <div id="passwordRow" class="input-row">
+              <div class="input-group half-width">
+                <label for="password">Password</label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  required
+                />
+                {% if form.password.errors %}
+                <div class="error">{{ form.password.errors }}</div>
+                {% endif %}
+                <!-- <small style="margin-left: 8px;">Password must be at least 8 characters long and include:</small>
+                <ul style="margin-left: 18px;">
+                  <li>At least one uppercase letter</li>
+                  <li>At least one lowercase letter</li>
+                  <li>At least one digit</li>
+                  <li>At least one special character (e.g., @, #, $, etc.)</li>
+                </ul> -->
+              </div>
+              <div class="input-group half-width">
+                <label for="confirm_password">Confirm Password</label>
+                <input
+                  id="confirm_password"
+                  name="confirm_password"
+                  type="password"
+                  placeholder="Confirm your password"
+                  required
+                />
+                {% if form.confirm_password.errors %}
+                <div class="error">{{ form.confirm_password.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- College/University -->
+            <div id="collegeField" class="input-group">
+              <label for="college">College / University</label>
+              <input
+                id="college"
+                name="college"
+                type="text"
+                placeholder="Enter your college"
+              />
+              {% if form.college.errors %}
+              <div class="error">{{ form.college.errors }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Status -->
+            <div id="currentStatusField" class="input-group">
+              <label style="margin-bottom: 10px">Current Status</label>
+              <div class="radio-group">
+                <div>
+                  <input
+                    type="radio"
+                    id="statusProfessor"
+                    name="current_status"
+                    value="Professor"
+                    onclick="toggleAdditionalFields()"
+                  />
+                  <label for="statusProfessor">Professor</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="statusStudent"
+                    name="current_status"
+                    value="Student"
+                    onclick="toggleAdditionalFields()"
+                  />
+                  <label for="statusStudent">Student</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="statusAlumni"
+                    name="current_status"
+                    value="Alumni"
+                    onclick="toggleAdditionalFields()"
+                  />
+                  <label for="statusAlumni">Alumni</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Additional Fields  -->
+            <div id="additionalFields">
+              <!-- Employee ID -->
+              <div
+                id="employeeIdField"
+                class="input-group"
+                style="display: none"
+              >
+                <label for="employee_id">Employee ID</label>
+                <input
+                  id="employee_id"
+                  name="employee_id"
+                  type="text"
+                  placeholder="Enter your employee ID"
+                />
+                {% if form.employee_id.errors %}
+                <div class="error">{{ form.employee_id.errors }}</div>
+                {% endif %}
+              </div>
+
+              <!-- University Roll No -->
+              <div
+                id="universityRollNoField"
+                class="input-group"
+                style="display: none"
+              >
+                <label for="university_roll_no">University Roll No</label>
+                <input
+                  id="university_roll_no"
+                  name="university_roll_no"
+                  type="text"
+                  placeholder="Enter your university roll number"
+                />
+                {% if form.university_roll_no.errors %}
+                <div class="error">{{ form.university_roll_no.errors }}</div>
+                {% endif %}
+              </div>
+
+              <!-- Passout Year -->
+              <div
+                id="passoutYearField"
+                class="input-group"
+                style="display: none"
+              >
+                <label for="passout_year">Passout Year</label>
+                <input
+                  id="passout_year"
+                  name="passout_year"
+                  type="text"
+                  placeholder="Enter your passout year"
+                />
+                {% if form.passout_year.errors %}
+                <div class="error">{{ form.passout_year.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn" id="submitButton">Sign Up</button>
+          </form>
+
+          <p>
+            Already have an account?
+            <a href="{% url 'login' %}">Log in here</a>
+          </p>
+
+          <!-- General errors -->
+          <div class="notification" id="notification" style="display: none">
+            {% if form.non_field_errors %}
+            <div class="error">{{ form.non_field_errors }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleAdditionalFields() {
+        const statusProfessor = document.getElementById("statusProfessor");
+        const statusStudent = document.getElementById("statusStudent");
+        const statusAlumni = document.getElementById("statusAlumni");
+
+        const employeeIdField = document.getElementById("employeeIdField");
+        const universityRollNoField = document.getElementById(
+          "universityRollNoField"
+        );
+        const passoutYearField = document.getElementById("passoutYearField");
+
+        // Hide all additional fields initially
+        employeeIdField.style.display = "none";
+        universityRollNoField.style.display = "none";
+        passoutYearField.style.display = "none";
+
+        // Show specific fields based on the selected radio button
+        if (statusProfessor.checked) {
+          employeeIdField.style.display = "block";
+        } else if (statusStudent.checked) {
+          universityRollNoField.style.display = "block";
+        } else if (statusAlumni.checked) {
+          universityRollNoField.style.display = "block";
+          passoutYearField.style.display = "block";
+        }
+      }
+    </script>
+  </body>
+</html>
