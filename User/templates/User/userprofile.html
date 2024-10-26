@@ -52,14 +52,15 @@
     
     <div class="container">
         <h2 >User Information</h2>
-        <form action="#" method="POST">
+        <form action="{% url 'userProfile' %}" method="POST">
+            {% csrf_token %}
             <div class="form-group">
                 <label for="studentId">Student ID / Employee ID:</label>
-                <input type="text" id="studentId" name="studentId" class="form-control" required>
+                <input type="text" id="student_id" name="student_id" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="passoutYear">Passout Year:</label>
-                <input type="text" id="passoutYear" name="passoutYear" class="form-control" required>
+                <input type="text" id="passout_year" name="passout_year" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="profession">Current Profession:</label>
@@ -99,11 +100,11 @@
             </div>
             <div class="form-group">
                 <label for="interests">Favorite Music(comma separated):</label>
-                <input type="text" id="interests" name="interests" class="form-control" required>
+                <input type="text" id="interests_music" name="interests_music" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="interests">Favorite Movies(comma separated):</label>
-                <input type="text" id="interests" name="interests" class="form-control" required>
+                <input type="text" id="interests_movies" name="interests_movies" class="form-control" required>
             </div>
             <button type="submit" class="btn">Submit</button>
         </form>
