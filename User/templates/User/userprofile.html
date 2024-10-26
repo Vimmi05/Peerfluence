@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Form</title>
+    <style>
+        body {
+            margin-top: 20px;
+            background: #70A9A1;
+        }
+        .theme-bg-white, .card {
+            border: 1px solid #79ffed;
+            background-color: #fff !important;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #79ffed; 
+            border-radius: 8px; 
+            background-color: #fff; 
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-control {
+            width: 97%;
+            padding: 10px;
+            border: 1px solid #53867f;;
+            border-radius: 5px;
+        }
+        
+        .btn {
+            background-color: #79ffed;
+            border: none;
+            padding: 10px 15px;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #67d2c9;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <h2 >User Information</h2>
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="studentId">Student ID / Employee ID:</label>
+                <input type="text" id="studentId" name="studentId" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="passoutYear">Passout Year:</label>
+                <input type="text" id="passoutYear" name="passoutYear" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="profession">Current Profession:</label>
+                <input type="text" id="profession" name="profession" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="college">College / University:</label>
+                <input type="text" id="college" name="college" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="birthday">Birthday:</label>
+                <input type="date" id="birthday" name="birthday" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="languages">Languages(comma separated):</label>
+                <input type="text" id="languages" name="languages" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="interests">Favorite Music(comma separated):</label>
+                <input type="text" id="interests" name="interests" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="interests">Favorite Movies(comma separated):</label>
+                <input type="text" id="interests" name="interests" class="form-control" required>
+            </div>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </div>
+    
+</body>
+</html>
