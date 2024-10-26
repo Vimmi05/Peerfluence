@@ -9,7 +9,7 @@ class SignUpForm(forms.ModelForm):
         fields = [
             'first_name', 'last_name', 'email', 'phone_number',
             'password', 'confirm_password', 'college', 'current_status',
-            'employee_id', 'university_roll_no', 'passout_year'
+            'employee_id', 'student_id', 'passout_year'
         ]
         widgets = {
             'password': forms.PasswordInput(),
