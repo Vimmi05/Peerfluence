@@ -228,15 +228,15 @@
                 {% endif %}
               </div>
               <div id="phoneField" class="input-group half-width">
-                <label for="phone_number">Phone Number</label>
+                <label for="phone">Phone Number</label>
                 <input
                   id="phone"
                   name="phone"
                   type="text"
                   placeholder="Enter your phone number"
                 />
-                {% if form.phone_number.errors %}
-                <div class="error">{{ form.phone_number.errors }}</div>
+                {% if form.phone.errors %}
+                <div class="error">{{ form.phone.errors }}</div>
                 {% endif %}
               </div>
             </div>
@@ -292,6 +292,25 @@
               {% endif %}
             </div>
 
+            <!-- Gender -->
+            <div id="GenderField" class="input-group">
+              <label style="margin-bottom: 10px">Gender</label>
+              <div class="radio-group" style="padding-left: 4rem;">
+                  <div>
+                      <input type="radio" id="statusFemale" name="gender" value="Female" />
+                      <label for="statusFemale">Female</label>
+                  </div>
+                  <div>
+                      <input type="radio" id="statusMale" name="gender" value="Male" />
+                      <label for="statusMale">Male</label>
+                  </div>
+                  <div>
+                      <input type="radio" id="statusOthers" name="gender" value="Others" />
+                      <label for="statusOthers">Others</label>
+                  </div>
+              </div>
+          </div>
+      
             <!-- Status -->
             <div id="currentStatusField" class="input-group">
               <label style="margin-bottom: 10px">Current Status</label>

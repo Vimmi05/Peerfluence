@@ -13,7 +13,11 @@ class UserProfile(models.Model):
         ('Student', 'Student'),
         ('Alumni', 'Alumni'),
     ]
-
+    GENDER_CHOICES = [
+        ('Female', 'Female'),
+        ('Male', 'Male'),
+        ('Others', 'Others')
+    ]
     first_name = models.CharField(max_length=FIRST_NAME_MAX_LENGTH)
     last_name = models.CharField(max_length=LAST_NAME_MAX_LENGTH)
     email = models.EmailField(max_length=EMAIL_MAX_LENGTH, unique=True)
@@ -24,7 +28,8 @@ class UserProfile(models.Model):
     employee_id = models.CharField(max_length=50, blank=True, null=True)
     student_id = models.CharField(max_length=50, blank=True, null=True)
     passout_year = models.IntegerField(blank=True, null=True)
-
+    gender = models.CharField(max_length=20, choices=GENDER_CHOICES)
+    
     def save(self, *args, **kwargs):
         if not self.pk:  
             self.password = make_password(self.password)
@@ -32,3 +37,11 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+class UserPostModel(models.Model):
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='posts')
+    img = models.ImageField(blank=True, null=True)
+    postDesc = models.TextField()
+
+    def __str__(self):
+        return f"Post by {self.user_profile.first_name} {self.user_profile.last_name}" 

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Form</title>
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+        integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous"/>
+    <style>
+        body {
+            margin-top: 20px;
+            background: #70A9A1;
+        }
+        .theme-bg-white, .card {
+            border: 1px solid #79ffed;
+            background-color: #fff !important;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #79ffed; 
+            border-radius: 8px; 
+            background-color: #fff; 
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-control {
+            width: 97%;
+            padding: 10px;
+            border: 1px solid #53867f;;
+            border-radius: 5px;
+        }
+        
+        .btn {
+            background-color: #79ffed;
+            border: none;
+            padding: 10px 15px;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #67d2c9;
+        }
+        .nav-item{
+        font-size: 12px;
+    }
+    i{
+        color: white;
+    }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION BAR -->
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light navbarbg sticky-top d-flex mb-5 border-bottom">
+    
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <!-- <i class="fab fa-linkedin fa-lg" style="color: #0a66c2; font-size: 2.4rem"></i> -->
+                     <img src="{% static 'images/logo.png' %}" alt="" srcset="" style="height: 50px;width: 60px;">
+                     </a>
+                <form class="form-inline ">
+                    <input class="form-control searche" type="search" placeholder="Arama Yap" aria-label="Search"/>
+                </form>
+                
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        
+                        <li class="nav-item active" >
+                            <a class="nav-link" href="/">
+                                <i class="fas fa-home fa-lg text-center" >
+                                    <div class="menutext mt-2">
+                                        Home
+                                    </div>
+                                </i>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-user-friends fa-lg text-center">
+                                    <div class="menutext mt-2">
+                                        My Network
+                                    </div>
+                                </i>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-briefcase fa-lg text-center">
+                                    <div class="menutext mt-2">
+                                        Jobs
+                                    </div>
+                                </i>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-comment-dots fa-lg text-center">
+                                    <div class="menutext mt-2">
+                                        Messaging
+                                    </div>
+                                </i>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-bell fa-lg text-center">
+                                    <div class="menutext mt-2">
+                                        Notifications
+                                    </div>
+                                </i>
+                            </a>
+                        </li>
+                                                    
+                    </ul>
+                </div>
+            </div>
+        </nav>
+     </div>
+
+    <div class="container">
+        <h2 >User Information</h2>
+        <form action="{% url 'updateProfile' data.id %}" method="POST">
+            {% csrf_token %}
+            <!-- <div class="form-group">
+                <label for="studentId">Student ID / Employee ID:</label>
+                <input type="text" id="student_id" name="student_id" class="form-control" required>
+            </div> -->
+            <!-- <div class="form-group">
+                <label for="passoutYear">Passout Year:</label>
+                <input type="text" id="passout_year" name="passout_year" class="form-control" required>
+            </div> -->
+            <div class="form-group">
+                <label for="img" class="img">Profile Picture</label>
+                <input type="file" id="img" name="img" class="form-control1" value="{{ data.img.url }}">
+            </div>
+            <div class="form-group">
+                <label for="profession">Current Profession:</label>
+                <input type="text" id="profession" name="profession" class="form-control" value="{{data.profession}}">
+            </div>
+            <!-- <div class="form-group">
+                <label for="college">College / University:</label>
+                <input type="text" id="college" name="college" class="form-control" required>
+            </div> -->
+            <div class="form-group">
+                <label for="birthday">Birthday:</label>
+                <input type="date" id="birthday" name="birthday" class="form-control" value="{{ data.birthday|date:'Y-m-d' }}">
+            </div>
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" class="form-control" value="{{data.country}}">
+            </div>
+            <div class="form-group">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" class="form-control" value="{{data.state}}">
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" class="form-control" value="{{data.city}}">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" class="form-control" value="{{data.description}}">
+            </div>
+            
+            <div class="form-group">
+                <label for="languages">Languages(comma separated):</label>
+                <input type="text" id="languages" name="languages" class="form-control" value="{{data.languages}}">
+            </div>
+            <!-- <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div> -->
+            <!-- <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" class="form-control" required>
+            </div> -->
+            <div class="form-group">
+                <label for="interests">Favorite Music(comma separated):</label>
+                <input type="text" id="interests_music" name="interests_music" class="form-control" value="{{data.interests_music}}">
+            </div>
+            <div class="form-group">
+                <label for="interests">Favorite Movies(comma separated):</label>
+                <input type="text" id="interests_movies" name="interests_movies" class="form-control" value="{{data.interests_movies}}">
+            </div>
+            
+
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </div>
+    
+</body>
+</html>

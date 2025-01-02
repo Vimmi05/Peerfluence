@@ -4,44 +4,170 @@ from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
+from User.models import *
+from Article.models import *
+from Article.forms import *
+import random
+
 # Create your views here.
 def Index(request):
-    return render(request, 'website/index.html')
+    username = None
+    status = None
+    college = None
+    # Check if the user ID is in the session
+    random_posts = UserPostModel.objects.order_by('?')
+
+    user_info = UserInformation.objects.order_by('-created_at').first()
+    state = user_info.state
+    img = user_info.img
+
+
+    user_all = UserProfile.objects.order_by('?')[:3]
+
+    if 'user_id' in request.session:
+        try:
+            user_profile = UserProfile.objects.get(id=request.session['user_id'])
+            username = f"{user_profile.first_name} {user_profile.last_name}"
+            college = user_profile.college
+            status = user_profile.current_status
+              # Get the first name from UserProfile
+        except UserProfile.DoesNotExist:
+            # Handle case where the UserProfile does not exist
+            messages.error(request, 'User profile not found.')
+            del request.session['user_id']  # Clear session if user profile not found
+    else:
+        messages.info(request, 'You are not logged in.')
+
+
+    data = ArticleModels.objects.all()
+
+    context = {
+        'username': username,
+        'status': status,
+        'college': college,
+        'data':data,
+        'random_posts':random_posts,
+        'state':state,
+        'user_all':user_all,
+        'img':img
+        
+    }
+    return render(request, 'website/index.html', context)
 
 def Profile(request):
-    return render(request, 'website/profile.html')
+    username = None
+    student_id = None
+    status = None
+    college =  None
+    passout_year = None
+    employee_id = None
+    email = None
+    phone = None
+    gender = None
+    
+    # Check if the user ID is in the session
+    # user_all = UserProfile.objects.order_by('?')[:9]
+
+    if 'user_id' in request.session:
+        try:
+            user_profile = UserProfile.objects.get(id=request.session['user_id'])
+
+            posts = UserPostModel.objects.filter(user_profile=user_profile)
+            post_count = posts.count()
+            image_count = sum(1 for post in posts if post.img)
+
+
+            username = f"{user_profile.first_name} {user_profile.last_name}"
+            college = user_profile.college
+            status = user_profile.current_status
+            student_id = user_profile.student_id 
+            passout_year = user_profile.passout_year
+            employee_id =  user_profile.employee_id 
+            email = user_profile.email
+            phone = user_profile.phone   
+            gender = user_profile.gender         
+              # Get the first name from UserProfile
+        except UserProfile.DoesNotExist:
+            # Handle case where the UserProfile does not exist
+            messages.error(request, 'User profile not found.')
+            del request.session['user_id']  # Clear session if user profile not found
+    else:
+        messages.info(request, 'You are not logged in.')
+# PROFILE 
+    # user_info = UserInformation.objects.get(id=5)
+    # user_info = UserInformation.objects.filter(id=request.session['user_id']).order_by('-created_at').first()
+    # Get the latest UserInformation entry
+    # user_info = UserInformation.objects.filter(user_id=request.session['user_id']).order_by('-id').first()
+    # user_info = UserInformation.objects.get(id=id)
+    user_info = UserInformation.objects.order_by('-created_at').first()
+    img = user_info.img
+    profession = user_info.profession
+    birthday = user_info.birthday
+    country = user_info.country
+    state = user_info.state
+    city = user_info.city
+    languages = user_info.languages
+    interests_music = user_info.interests_music
+    interests_movies = user_info.interests_movies
+    description = user_info.description
+
+# FOLLLOW
+    followers = random.randint(0, 10)
+    following = random.randint(0, 10)
+
+    user_all = UserProfile.objects.exclude(id=user_profile.id).order_by('?')[:followers]
+
+    skills = Skill.objects.order_by('?')[:4]
+    context = {
+        'username': username,
+        'status': status,
+        'college': college,
+        'student_id': student_id,
+        'passout_year' : passout_year,
+        'employee_id' : employee_id,
+        'email' : email,
+        'phone': phone,
+        'img' : img,
+        'profession' : profession,
+        'birthday' : birthday,
+        'country' : country,
+        'state' : state,
+        'city' : city,
+        'languages' : languages,
+        'interests_music' : interests_music,
+        'interests_movies' : interests_movies,
+        'description' : description,
+        'followers': followers,
+        'following': following,  
+        'data': user_info,
+        'user': f"{user_profile.first_name} {user_profile.last_name}",
+        'posts': posts,
+        'post_count': post_count,
+        'image_count': image_count,
+        'user_all':user_all,
+        'gender':gender,
+        'skills':skills
+                
+    }
+    return render(request, 'website/profile.html', context)
+
 
 def SignUp(request):
     if request.method == 'POST':
+        print(request.POST) 
         form = SignUpForm(request.POST)
         if form.is_valid():
             # Save the form, but don't commit to the database yet
             user_profile = form.save(commit=False)
             user_profile.password = form.cleaned_data['password']  # Hash this if needed
             user_profile.save()  # Save to the database
-            return redirect('/')  # Redirect after successful sign-up
+            return redirect('login')  # Redirect after successful sign-up
+        else:
+            print(form.errors)
     else:
         form = SignUpForm()
 
     return render(request, 'website/signup.html', {'form': form})
-
-
-# def LogIn(request):
-    # if request.method == 'POST':
-    #     form = CustomAuthenticationForm(request, data=request.POST)
-    #     if form.is_valid():
-    #         username = form.cleaned_data.get('username')
-    #         password = form.cleaned_data.get('password')
-    #         user = authenticate(request, username=username, password=password)
-    #         if user is not None:
-    #             login(request, user)
-    #             messages.success(request, 'Logged in successfully!')
-    #             return redirect('/')
-    #         else:
-    #             messages.error(request, 'Invalid username or password')
-    # else:
-    #     form = CustomAuthenticationForm()
-        # return render(request, 'website/login.html')
 
 def LogIn(request):
     if request.method == "POST":
@@ -69,3 +195,39 @@ def LogOut(request):
     logout(request)
     messages.success(request, "Logged Out Successfully!")
     return render(request, 'website/login.html')
+
+def create_post(request):
+    username = None
+
+    if request.method == 'POST':
+        user_profile = UserProfile.objects.get(id=request.session['user_id'])
+        form = UserPostForm(request.POST, request.FILES, user_profile=user_profile)
+
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user_profile = user_profile
+            post.save()
+            messages.success(request, 'Post created successfully!')
+            return redirect('/')
+    else:
+        user_profile = UserProfile.objects.get(id=request.session['user_id'])
+        form = UserPostForm(user_profile=user_profile)
+        username = f"{user_profile.first_name} {user_profile.last_name}"
+
+    context = {
+        'form': form,
+        'username': username,
+    }
+
+    return render(request, 'website/user_post.html', context)
+
+# def user_posts(request):
+#     user_profile = UserProfile.objects.get(id=request.session['user_id'])
+#     posts = UserPostModel.objects.filter(user_profile=user_profile)
+#     print(f"User: {user_profile}, Posts: {posts.count()}")
+#     context = {
+#         'username': f"{user_profile.first_name} {user_profile.last_name}",
+#         'posts': posts,
+#     }
+
+#     return render(request, 'website/profile.html', context)

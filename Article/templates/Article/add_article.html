@@ -1,0 +1,180 @@
+
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+  <style>
+    body {
+        margin-top: 20px;
+        background: #70A9A1;
+    }
+    .container1 {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        border: 2px solid #79ffed; 
+        border-radius: 8px; 
+        background-color: #fff; 
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .form-group1 {
+        margin-bottom: 15px;
+    }
+    .form-group1 label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .form-group1 input{
+      width: 94%;
+    }
+    .form-control1 {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #53867f;
+        border-radius: 5px;
+    }
+    .btn1 {
+        background-color: #79ffed;
+        border: none;
+        padding: 10px 15px;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+    }
+    .btn1:hover {
+        background-color: #67d2c9;
+    }
+    .nav-item{
+        font-size: 12px;
+    }
+    i{
+        color: white;
+    }
+</style>
+
+</head>
+<body>
+  
+<!-- NAVIGATION BAR -->
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light navbarbg sticky-top d-flex mb-5 border-bottom">
+
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <!-- <i class="fab fa-linkedin fa-lg" style="color: #0a66c2; font-size: 2.4rem"></i> -->
+                 <img src="{% static 'images/logo.png' %}" alt="" srcset="" style="height: 50px;width: 60px;">
+                 </a>
+            <form class="form-inline ">
+                <input class="form-control searche" type="search" placeholder="Arama Yap" aria-label="Search"/>
+            </form>
+            
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    
+                    <li class="nav-item active" >
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home fa-lg text-center" >
+                                <div class="menutext mt-2">
+                                    Home
+                                </div>
+                            </i>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-user-friends fa-lg text-center">
+                                <div class="menutext mt-2">
+                                    My Network
+                                </div>
+                            </i>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-briefcase fa-lg text-center">
+                                <div class="menutext mt-2">
+                                    Jobs
+                                </div>
+                            </i>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-comment-dots fa-lg text-center">
+                                <div class="menutext mt-2">
+                                    Messaging
+                                </div>
+                            </i>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-bell fa-lg text-center">
+                                <div class="menutext mt-2">
+                                    Notifications
+                                </div>
+                            </i>
+                        </a>
+                    </li>
+                                                
+                </ul>
+            </div>
+        </div>
+    </nav>
+ </div>
+
+<div class="container1 mb-5" style="margin-top: 20px;">
+    <h1 class="text-center mb-2">Write An Article</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="form-group1 col-md-12 col-sm-12 mt-4">
+                <label for="exampleInputEmail1">Title</label>
+                <input type="text" name="title" class="form-control1" id="exampleInputEmail1"
+                    aria-describedby="emailHelp" placeholder="Title">                   
+            </div>
+            <div class="form-group1 col-md-12 col-sm-12 mt-4">
+                <label for="exampleInputEmail1">Author</label>
+                {% render_field form.author class="form-control1" %}
+                <!-- <input type="text" name="author" class="form-control1" id="exampleInputEmail1"
+                    aria-describedby="emailHelp" placeholder="Author"> -->
+            </div>
+            <div class="form-group1 col-md-12 col-sm-12 mt-4">
+                <label for="exampleInputEmail1">Image</label>
+                <input type="file" name="image" class="form-control1" id="exampleInputEmail1"
+                    aria-describedby="emailHelp" placeholder="">
+            </div>
+            <div class="form-group1 col-md-12 col-sm-12 mt-4">
+                <label for="exampleInputEmail1">Description</label>
+                {% render_field form.description class="form-control1"  %}
+            </div>
+            <div class="form-group1 col-md-12 col-sm-12 mt-3">
+                <input type="submit" class="form-control1 btn1 btn-outline-dark" id="exampleFormControlFile1" style="width: 10%;">
+            </div>
+        </div>
+    </form>
+    {{form.media}}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
