@@ -15,6 +15,17 @@ def Index(request):
     status = None
     college = None
     # Check if the user ID is in the session
+
+    # notification_messages = [
+    #     "username1 has sent you a follow request",
+    #     "username2 has sent you a follow request",
+    #     "Welcome to Peerfluence, begin your journey!",
+    #     "You have a new message",
+    #     "Your post has been liked",
+    #     "A new event is coming up",
+    # ]
+    # random_count = random.randint(1, len(notification_messages))
+    # notifications = random.sample(notification_messages, random_count)
     random_posts = UserPostModel.objects.order_by('?')
 
     user_info = UserInformation.objects.order_by('-created_at').first()
@@ -30,6 +41,17 @@ def Index(request):
             username = f"{user_profile.first_name} {user_profile.last_name}"
             college = user_profile.college
             status = user_profile.current_status
+
+            random_user = UserProfile.objects.order_by('?').first()
+            random_username = f"{random_user.first_name} {random_user.last_name}" if random_user else "Someone"
+            notification_messages = [
+                f"{random_username} has sent you a follow request",
+                "Welcome to Peerfluence, begin your journey!",
+                "You have a new message",
+                "Your post has been liked",
+                "A new event is coming up",
+            ]
+
               # Get the first name from UserProfile
         except UserProfile.DoesNotExist:
             # Handle case where the UserProfile does not exist
@@ -38,7 +60,8 @@ def Index(request):
     else:
         messages.info(request, 'You are not logged in.')
 
-
+    random_count = random.randint(1, len(notification_messages))
+    notifications = random.sample(notification_messages, random_count)
     data = ArticleModels.objects.all()
 
     context = {
@@ -49,8 +72,9 @@ def Index(request):
         'random_posts':random_posts,
         'state':state,
         'user_all':user_all,
-        'img':img
-        
+        'img':img,
+        'random_count':random_count,
+        'notifications': notifications,        
     }
     return render(request, 'website/index.html', context)
 
