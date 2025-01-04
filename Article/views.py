@@ -28,4 +28,4 @@ def View_Articel(request, id):
     data = ArticleModels.objects.get(id=id)
     randomArticles = ArticleModels.objects.exclude(id=id).order_by('-Pub_date')[:3]
     context = {'data': data, 'randomArticles': randomArticles}
-    return render(request, 'Article/view_Articles.html', context)
+    return render(request, 'Article/view_articles.html', context)
