@@ -271,3 +271,7 @@ def create_post(request):
 #     }
 
 #     return render(request, 'website/profile.html', context)
+
+# def manage_skills(request):
+#     # Your logic to get the skills and render the manage skills page
+#     return render(request, 'User/manage_skills.html')
