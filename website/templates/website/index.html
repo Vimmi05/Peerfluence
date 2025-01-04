@@ -67,6 +67,40 @@
         .dropdown-item {
             white-space: normal;
         }
+        .search-btn {
+            border: 1px solid #70A9A1;
+            margin-left: 10px;
+        }
+        .btn:hover{
+            background-color: #70A9A1;
+        }
+        /* Custom Dropdown Styling */
+#searchResultsDropdown {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin: 2px 0;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-header {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    padding: 8px 12px;
+}
+
+.dropdown-divider {
+    margin: 4px 0;
+}
     </style>
 </head>
 <body>
@@ -131,11 +165,11 @@
                 </div>
                 <div class="card-body p-2">
                     <!-- First Suggestion -->
-                     {% for i in user_all %}
+                     {% for user in random_users %}
                     <div class="d-flex align-items-center mb-3">
                         <img src="https://coursereport-s3-production.global.ssl.fastly.net/uploads/school/logo/180/original/11188290-461044804062854-1290850627040404888-n.png" class="rounded-circle me-2" style="width: 30px; height: 30px;">
                         <div class="flex-grow-1">
-                            <p class="mb-0 small">{{ i.first_name }}</p>
+                            <p class="mb-0 small">{{ user.first_name }}</p>
                         </div>
                         <button class="btn btn-outline-info btn-sm follow-request" style="font-size: 12px; padding: 3px 6px;" onclick="sendFollowRequest(this)">+ Follow</button>
 
@@ -162,9 +196,68 @@
                             <!-- <i class="fab fa-linkedin fa-lg" style="color: #0a66c2; font-size: 2.4rem"></i> -->
                              <img src="{% static 'images/logo.png' %}" alt="" srcset="" style="height: 50px;width: 60px;">
                              </a>
-                        <form class="form-inline ">
-                            <input class="form-control searche" type="search" placeholder="Arama Yap" aria-label="Search"/>
-                        </form>
+                             <!-- Search Form -->
+                            
+
+                             <!-- Search Form -->
+                             <form class="form-inline" action="{% url 'index' %}" method="GET" id="searchForm">
+                                <div class="input-group">
+                                    <input class="form-control searche" type="search" name="q" placeholder="Enter Name" aria-label="Search" id="searchInput"/>
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn search-btn">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                            <!-- Search Results Dropdown -->
+                            <div class="dropdown-menu mt-3 nav-item dropdown" id="searchResultsDropdown" style="width: 300px;">
+                                <h6 class="dropdown-header">Search Results for "{{ search_query }}"</h6>
+                                <div class="dropdown-divider"></div>
+                                {% for user in user_all %}
+                                    <div class="dropdown-item d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ user.img.url }}" alt="User Image" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                                            <div>
+                                                <span class="d-block mx-2">{{ user.first_name }} {{ user.last_name }}</span>
+                                                <small class="text-muted mx-2">{{ user.college }}</small>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline-info btn-sm follow-btn" onclick="sendFollowRequest(this)">+ Follow</button>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                {% empty %}
+                                    <a class="dropdown-item" href="#">No users found.</a>
+                                {% endfor %}
+                            </div>
+                            
+                            <script>
+                                document.getElementById('searchForm').addEventListener('submit', function(event) {
+                                    event.preventDefault(); // Prevent form submission
+                            
+                                    const searchQuery = document.getElementById('searchInput').value.trim();
+                                    if (searchQuery) {
+                                        // Simulate form submission (you can replace this with an AJAX call if needed)
+                                        window.location.href = `{% url 'index' %}?q=${encodeURIComponent(searchQuery)}`;
+                                    }
+                                });
+                            
+                                // Show the dropdown when the page loads with search results
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const searchResultsDropdown = document.getElementById('searchResultsDropdown');
+                                    if (searchResultsDropdown) {
+                                        searchResultsDropdown.style.display = 'block';
+                                    }
+                                });
+                            
+                                // Close the dropdown when clicking outside of it
+                                document.addEventListener('click', function(event) {
+                                    const searchResultsDropdown = document.getElementById('searchResultsDropdown');
+                                    const searchInput = document.getElementById('searchInput');
+                                    if (searchResultsDropdown && !searchResultsDropdown.contains(event.target) && !searchInput.contains(event.target)) {
+                                        searchResultsDropdown.style.display = 'none';
+                                    }
+                                });
+</script>
                         
                         <div class="collapse navbar-collapse">
                             <ul class="navbar-nav ml-auto">

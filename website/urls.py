@@ -12,4 +12,6 @@ urlpatterns = [
 
     path('CreateUserPost/', views.create_post, name='create_user_post'),
 
+    
+
 ]

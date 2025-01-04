@@ -14,26 +14,38 @@ def Index(request):
     username = None
     status = None
     college = None
-    # Check if the user ID is in the session
 
-    # notification_messages = [
-    #     "username1 has sent you a follow request",
-    #     "username2 has sent you a follow request",
-    #     "Welcome to Peerfluence, begin your journey!",
-    #     "You have a new message",
-    #     "Your post has been liked",
-    #     "A new event is coming up",
-    # ]
-    # random_count = random.randint(1, len(notification_messages))
-    # notifications = random.sample(notification_messages, random_count)
+    # Initialize notification_messages with a default value
+    notification_messages = [
+        "Welcome to Peerfluence, begin your journey!",
+        "You have a new message",
+        "Your post has been liked",
+        "A new event is coming up",
+    ]
+
+    # Fetch random posts
     random_posts = UserPostModel.objects.order_by('?')
 
+    # Fetch user information
     user_info = UserInformation.objects.order_by('-created_at').first()
-    state = user_info.state
-    img = user_info.img
+    state = user_info.state if user_info else None
+    img = user_info.img if user_info else None
 
+    # Fetch 3 random users for "Suggestions for You"
+    random_users = UserProfile.objects.order_by('?')[:3]
 
-    user_all = UserProfile.objects.order_by('?')[:3]
+    # Handle search query
+    search_query = request.GET.get('q')
+    if search_query:
+        # Filter users based on search query
+        user_all = UserProfile.objects.filter(
+            first_name__icontains=search_query
+        ) | UserProfile.objects.filter(
+            last_name__icontains=search_query
+        )
+    else:
+        # If no search query, use the random users for search results (optional)
+        user_all = UserProfile.objects.none()  # Empty queryset by default
 
     if 'user_id' in request.session:
         try:
@@ -44,6 +56,8 @@ def Index(request):
 
             random_user = UserProfile.objects.order_by('?').first()
             random_username = f"{random_user.first_name} {random_user.last_name}" if random_user else "Someone"
+
+            # Update notification_messages if the user is logged in
             notification_messages = [
                 f"{random_username} has sent you a follow request",
                 "Welcome to Peerfluence, begin your journey!",
@@ -52,32 +66,39 @@ def Index(request):
                 "A new event is coming up",
             ]
 
-            # Get the first name from UserProfile
         except UserProfile.DoesNotExist:
             # Handle case where the UserProfile does not exist
             messages.error(request, 'User profile not found.')
-            del request.session['user_id']  # Clear session if user profile not found
+            del request.session['user_id']
     else:
         messages.info(request, 'You are not logged in.')
 
-    random_count = random.randint(1, len(notification_messages))
-    notifications = random.sample(notification_messages, random_count)
+    # Calculate random_count and notifications only if notification_messages is not empty
+    if notification_messages:
+        random_count = random.randint(1, len(notification_messages))
+        notifications = random.sample(notification_messages, random_count)
+    else:
+        random_count = 0
+        notifications = []
+
+    # Fetch articles
     data = ArticleModels.objects.all()
 
     context = {
         'username': username,
         'status': status,
         'college': college,
-        'data':data,
-        'random_posts':random_posts,
-        'state':state,
-        'user_all':user_all,
-        'img':img,
-        'random_count':random_count,
-        'notifications': notifications,        
+        'data': data,
+        'random_posts': random_posts,
+        'state': state,
+        'user_all': user_all,  # Users matching the search query
+        'random_users': random_users,  # Random users for "Suggestions for You"
+        'img': img,
+        'random_count': random_count,
+        'notifications': notifications,
+        'search_query': search_query,
     }
-    return render(request, 'website/index.html', context)
-
+    return render(request, 'website/index.html', context)   
 def Profile(request):
     username = None
     student_id = None
