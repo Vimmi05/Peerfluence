@@ -444,7 +444,7 @@
                         {{ post.postDesc|slice:":450" }}{% if post.postDesc|length > 450 %}...{% endif %}
                     </p>
                     {% if post.postDesc|length > 450 %}
-                        <a href="javascript:void(0)" class="show-more mx-3" id="toggle-link-{{ post.id }}" onclick="togglePostDescription({{ post.id }}, '{{ post.postDesc|escapejs }}')">Show More</a>
+                        <a href="javascript:void(0)" class="show-more mx-3" id="toggle-link-{{ post.id }}" onclick="togglePostDescription('{{ post.id }}', '{{ post.postDesc|escapejs }}')">Show More</a>
                     {% endif %}
                 </div>
                 
