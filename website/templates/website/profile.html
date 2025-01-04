@@ -575,7 +575,12 @@
             <!-- / Side info -->
             <!-- Skills -->
             <div class="card mb-4">
-              <div class="card-header">Skills</div>
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <div>Skills</div>
+                <a href="{% url 'manage_skills' %}" class="d-block text-center text-white small font-weight-semibold btn btn-primary rounded-pill">
+                  Add Skills
+              </a>
+              </div>
               <div class="card-body">
                 {% for i in skills %}
                 <div class="mb-1">
@@ -592,10 +597,12 @@
                 {% endfor %}
 
               </div>
+              <a
+                href="javascript:void(0)"
+                class="card-footer d-block text-center text-body small font-weight-semibold"
+                >SHOW ALL SKILLS</a
+              >
               
-              <a href="{% url 'manage_skills' %}" class="card-footer d-block text-center text-body small font-weight-semibold">
-                SHOW ALL SKILLS
-            </a>
             </div>
             <!-- / Skills -->
             <!-- Friends -->
