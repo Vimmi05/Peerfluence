@@ -52,7 +52,7 @@ def Index(request):
                 "A new event is coming up",
             ]
 
-              # Get the first name from UserProfile
+            # Get the first name from UserProfile
         except UserProfile.DoesNotExist:
             # Handle case where the UserProfile does not exist
             messages.error(request, 'User profile not found.')
@@ -82,15 +82,16 @@ def Profile(request):
     username = None
     student_id = None
     status = None
-    college =  None
+    college = None
     passout_year = None
     employee_id = None
     email = None
     phone = None
     gender = None
-    
-    # Check if the user ID is in the session
-    # user_all = UserProfile.objects.order_by('?')[:9]
+
+    # Initialize notifications and random_count
+    notification_messages = []
+    random_count = 0
 
     if 'user_id' in request.session:
         try:
@@ -100,29 +101,39 @@ def Profile(request):
             post_count = posts.count()
             image_count = sum(1 for post in posts if post.img)
 
-
             username = f"{user_profile.first_name} {user_profile.last_name}"
             college = user_profile.college
             status = user_profile.current_status
-            student_id = user_profile.student_id 
+            student_id = user_profile.student_id
             passout_year = user_profile.passout_year
-            employee_id =  user_profile.employee_id 
+            employee_id = user_profile.employee_id
             email = user_profile.email
-            phone = user_profile.phone   
-            gender = user_profile.gender         
-              # Get the first name from UserProfile
+            phone = user_profile.phone
+            gender = user_profile.gender
+
+            # NOTIFICATIONS
+            random_user = UserProfile.objects.order_by('?').first()
+            random_username = f"{random_user.first_name} {random_user.last_name}" if random_user else "Someone"
+
+            notification_messages = [
+                f"{random_username} has sent you a follow request",
+                "Welcome to Peerfluence, begin your journey!",
+                "You have a new message",
+                "Your post has been liked",
+                "A new event is coming up",
+            ]
+
+            # Randomly select notifications
+            random_count = random.randint(1, len(notification_messages))
+            notifications = random.sample(notification_messages, random_count)
+
         except UserProfile.DoesNotExist:
-            # Handle case where the UserProfile does not exist
             messages.error(request, 'User profile not found.')
-            del request.session['user_id']  # Clear session if user profile not found
+            del request.session['user_id']
     else:
         messages.info(request, 'You are not logged in.')
-# PROFILE 
-    # user_info = UserInformation.objects.get(id=5)
-    # user_info = UserInformation.objects.filter(id=request.session['user_id']).order_by('-created_at').first()
-    # Get the latest UserInformation entry
-    # user_info = UserInformation.objects.filter(user_id=request.session['user_id']).order_by('-id').first()
-    # user_info = UserInformation.objects.get(id=id)
+
+    # PROFILE INFO
     user_info = UserInformation.objects.order_by('-created_at').first()
     img = user_info.img
     profession = user_info.profession
@@ -135,44 +146,49 @@ def Profile(request):
     interests_movies = user_info.interests_movies
     description = user_info.description
 
-# FOLLLOW
+    # FOLLOW
     followers = random.randint(0, 10)
     following = random.randint(0, 10)
 
     user_all = UserProfile.objects.exclude(id=user_profile.id).order_by('?')[:followers]
 
+    # SKILLS
     skills = Skill.objects.order_by('?')[:4]
+
+    # CONTEXT
     context = {
         'username': username,
         'status': status,
         'college': college,
         'student_id': student_id,
-        'passout_year' : passout_year,
-        'employee_id' : employee_id,
-        'email' : email,
+        'passout_year': passout_year,
+        'employee_id': employee_id,
+        'email': email,
         'phone': phone,
-        'img' : img,
-        'profession' : profession,
-        'birthday' : birthday,
-        'country' : country,
-        'state' : state,
-        'city' : city,
-        'languages' : languages,
-        'interests_music' : interests_music,
-        'interests_movies' : interests_movies,
-        'description' : description,
+        'img': img,
+        'profession': profession,
+        'birthday': birthday,
+        'country': country,
+        'state': state,
+        'city': city,
+        'languages': languages,
+        'interests_music': interests_music,
+        'interests_movies': interests_movies,
+        'description': description,
         'followers': followers,
-        'following': following,  
+        'following': following,
         'data': user_info,
         'user': f"{user_profile.first_name} {user_profile.last_name}",
         'posts': posts,
         'post_count': post_count,
         'image_count': image_count,
-        'user_all':user_all,
-        'gender':gender,
-        'skills':skills
-                
+        'user_all': user_all,
+        'gender': gender,
+        'skills': skills,
+        'notifications': notifications,  # Pass notifications to the template
+        'random_count': random_count,  # Pass random_count to the template
     }
+
     return render(request, 'website/profile.html', context)
 
 
