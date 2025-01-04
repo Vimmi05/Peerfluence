@@ -4,7 +4,6 @@ from .models import Skill, UserInformation
 from .forms import SkillForm, UserInformationForm, forms
 from django.contrib import messages
 
-
 def UserProfile(request):
     if request.method == 'POST':
         form = UserInformationForm(request.POST,request.FILES)

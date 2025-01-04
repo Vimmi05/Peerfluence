@@ -127,6 +127,10 @@ def Profile(request):
             random_count = random.randint(1, len(notification_messages))
             notifications = random.sample(notification_messages, random_count)
 
+            # Generate random followers count
+            followers_count = random.randint(0, 10)
+            request.session['followers_count'] = followers_count  # Store in session
+
         except UserProfile.DoesNotExist:
             messages.error(request, 'User profile not found.')
             del request.session['user_id']
@@ -147,7 +151,7 @@ def Profile(request):
     description = user_info.description
 
     # FOLLOW
-    followers = random.randint(0, 10)
+    followers = request.session.get('followers_count', 0)  # Retrieve from session
     following = random.randint(0, 10)
 
     user_all = UserProfile.objects.exclude(id=user_profile.id).order_by('?')[:followers]
@@ -185,8 +189,8 @@ def Profile(request):
         'user_all': user_all,
         'gender': gender,
         'skills': skills,
-        'notifications': notifications,  # Pass notifications to the template
-        'random_count': random_count,  # Pass random_count to the template
+        'notifications': notifications,
+        'random_count': random_count,
     }
 
     return render(request, 'website/profile.html', context)
@@ -272,6 +276,30 @@ def create_post(request):
 
 #     return render(request, 'website/profile.html', context)
 
+def Followers(request):
+    context = {}
+
+    if 'user_id' in request.session:
+        try:
+            user_profile = UserProfile.objects.get(id=request.session['user_id'])
+            
+            # Retrieve the followers count from the session
+            followers_count = request.session.get('followers_count', 0)
+            
+            # Fetch a random set of followers matching the count
+            followers = UserProfile.objects.exclude(id=user_profile.id).order_by('?')[:followers_count]
+            
+            # Add followers to the context
+            context['followers'] = followers
+            context['followers_count'] = followers_count
+
+        except UserProfile.DoesNotExist:
+            messages.error(request, 'User profile not found.')
+            del request.session['user_id']
+    else:
+        messages.info(request, 'You are not logged in.')
+
+    return render(request, 'website/followers.html', context)
 # def manage_skills(request):
 #     # Your logic to get the skills and render the manage skills page
 #     return render(request, 'User/manage_skills.html')
