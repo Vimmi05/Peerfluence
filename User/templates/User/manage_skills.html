@@ -8,18 +8,62 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        /* General Styles */
         body {
-            margin-top: 20px;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
             background: #70A9A1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .container {
             max-width: 800px;
-            margin: auto;
             padding: 20px;
-            border: 2px solid #79ffed; 
-            border-radius: 8px; 
-            background-color: #fff; 
+            border: 2px solid #79ffed;
+            border-radius: 8px;
+            background-color: #fff;
+            width: 100%;
         }
+
+        /* Back Button Styles */
+        .back-btn {
+            margin-bottom: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: lightgray;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            text-decoration: none;
+            line-height: 1;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .back-btn:hover {
+            background-color: #b0b0b0;
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Header Container */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header-container h2 {
+            flex-grow: 1;
+            text-align: center;
+            margin: 0;
+        }
+
+        /* Button Styles */
         .btn {
             background-color: #79ffed;
             border: none;
@@ -32,25 +76,48 @@
         .btn:hover {
             background-color: #67d2c9;
         }
+
+        /* Form Field Styles */
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Manage Skills</h2>
+    <!-- Header with back button and title -->
+    <div class="header-container">
+        <a href="{% url 'profile' %}" class="back-btn">
+            &larr;
+        </a>
+        <h2>Manage Skills</h2>
+    </div>
+
+    <!-- Skill Management Form -->
     <form method="post">
         {% csrf_token %}
         
+        <!-- Skill Name Field -->
         <div class="form-group">
             <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
-            {{ form.name }}  <!-- Render the form field -->
+            {{ form.name }}  <!-- Render the skill name field -->
         </div>
         
+        <!-- Skill Percentage Field -->
         <div class="form-group">
             <label for="{{ form.percentage.id_for_label }}">{{ form.percentage.label }}</label>
-            {{ form.percentage }}  <!-- Render the form field -->
+            {{ form.percentage }}  <!-- Render the skill percentage field -->
         </div>
 
+        <!-- Save Button -->
         <button type="submit" class="btn">Save Skill</button>
     </form>
 </div>
