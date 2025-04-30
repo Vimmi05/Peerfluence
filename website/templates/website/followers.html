@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Followers</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+        integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous"/>
+    <style>
+        body {
+            margin-top: 20px;
+            background: #70A9A1;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .user-card {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .user-card:last-child {
+            border-bottom: none;
+        }
+        .user-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .user-info {
+            flex-grow: 1;
+        }
+        .user-info h5 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        .user-info p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .user-info small {
+            font-size: 12px;
+            color: #999;
+        }
+        .btn-message {
+            background-color: #0073b1;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-message:hover {
+            background-color: #005f8a;
+        }
+        .nav-item {
+            font-size: 12px;
+        }
+        i {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION BAR -->
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light sticky-top d-flex mb-5 border-bottom">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'images/logo.png' %}" alt="" srcset="" style="height: 50px;width: 60px;">
+                </a>
+                <form class="form-inline">
+                    <input class="form-control searche" type="search" placeholder="Arama Yap" aria-label="Search"/>
+                </form>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">
+                                <i class="fas fa-home fa-lg text-center">
+                                    <div class="menutext mt-2">Home</div>
+                                </i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-user-friends fa-lg text-center">
+                                    <div class="menutext mt-2">My Network</div>
+                                </i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-briefcase fa-lg text-center">
+                                    <div class="menutext mt-2">Jobs</div>
+                                </i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-comment-dots fa-lg text-center">
+                                    <div class="menutext mt-2">Messaging</div>
+                                </i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-bell fa-lg text-center">
+                                    <div class="menutext mt-2">Notifications</div>
+                                </i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <h2>Followers</h2>
+        <p>You have {{ followers_count }} followers.</p>
+        
+        <!-- Followers List -->
+        {% for follower in followers %}
+        <div class="user-card">
+            <!-- Gender-based Avatar -->
+            {% if follower.gender == 'Male' %}
+                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="{{ follower.first_name }} {{ follower.last_name }}">
+            {% elif follower.gender == 'Female' %}
+                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="{{ follower.first_name }} {{ follower.last_name }}">
+            {% else %}
+                <img src="{% static 'images/default-avatar.png' %}" alt="{{ follower.first_name }} {{ follower.last_name }}">
+            {% endif %}
+
+            <div class="user-info">
+                <h5>{{ follower.first_name }} {{ follower.last_name }}</h5>
+                <p>{{ follower.profession|default:"No profession provided" }}</p>  <!-- Display profession -->
+                <small>Connected {{ follower.connected_time|default:"recently" }}</small>
+            </div>
+            <button class="btn-message">Message</button>
+        </div>
+        {% endfor %}
+
+        <!-- Additional User Cards in a Grid Layout -->
+        <div class="row no-gutters row-bordered row-border-light mt-4">
+            {% for i in user_all %}
+            <div class="d-flex col-4 col-sm-3 col-md-4 flex-column align-items-center text-body py-3 px-2">
+                <!-- Gender-based Avatar -->
+                {% if i.gender == 'Male' %}
+                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="{{ i.first_name }} {{ i.last_name }}" class="d-block ui-w-40 rounded-circle mb-2" />
+                {% elif i.gender == 'Female' %}
+                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="{{ i.first_name }} {{ i.last_name }}" class="d-block ui-w-40 rounded-circle mb-2" />
+                {% else %}
+                    <img src="{% static 'images/default-avatar.png' %}" alt="{{ i.first_name }} {{ i.last_name }}" class="d-block ui-w-40 rounded-circle mb-2" />
+                {% endif %}
+
+                <div class="text-center small">{{ i.first_name }} {{ i.last_name }}</div>
+                <div class="text-center small">{{ i.profession|default:"No profession provided" }}</div>  <!-- Display profession -->
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

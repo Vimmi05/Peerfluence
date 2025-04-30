@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blogs</title>
+  {% load static %}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+        integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous"/>
+  <style>
+    body {
+        margin-top: 20px;
+        background: #70A9A1;
+    }
+    .container {
+        max-width: 1200px; /* Increased max-width for better spacing */
+        margin: auto;
+        padding: 20px;
+        border: 2px solid #79ffed; 
+        border-radius: 8px; 
+        background-color: #fff; 
+    }
+    .heading {
+        font-size: 50px;
+        text-align: center;
+        padding-top: 2rem;
+        color: #333;
+    }
+    .highlight {
+        color: #79ffed; /* Highlight color */
+    }
+    .blog-title {
+        color: #333;
+        margin-bottom: 10px;
+    }
+    .by-date {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    .card {
+        margin: 15px 0;
+        border: 1px solid #53867f;
+        border-radius: 5px;
+        background-color: #fff; /* Card background */
+    }
+    .card-body {
+        padding: 15px;
+    }
+    .card-text {
+        margin-top: 10px;
+    }
+    .btn {
+        background-color: #79ffed;
+        border: none;
+        padding: 10px 15px;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+    }
+    .btn:hover {
+        background-color: #67d2c9;
+    }
+    .nav-item{
+        font-size: 12px;
+    }
+    i{
+        color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION BAR -->
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light navbarbg sticky-top d-flex mb-5 border-bottom">
+
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <!-- <i class="fab fa-linkedin fa-lg" style="color: #0a66c2; font-size: 2.4rem"></i> -->
+                 <img src="{% static 'images/logo.png' %}" alt="" srcset="" style="height: 50px;width: 60px;">
+                 </a>
+            <form class="form-inline ">
+                <input class="form-control searche" type="search" placeholder="Arama Yap" aria-label="Search"/>
+            </form>
+            
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    
+                    <li class="nav-item active" >
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home fa-lg text-center" >
+                                <div class="menutext mt-2">
+                                    Home
+                                </div>
+                            </i>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-user-friends fa-lg text-center">
+                                <div class="menutext mt-2">
+                                    My Network
+                                </div>
+                            </i>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-briefcase fa-lg text-center">
+                                <div class="menutext mt-2">
+                                    Jobs
+                                </div>
+                            </i>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-comment-dots fa-lg text-center">
+                                <div class="menutext mt-2">
+                                    Messaging
+                                </div>
+                            </i>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-bell fa-lg text-center">
+                                <div class="menutext mt-2">
+                                    Notifications
+                                </div>
+                            </i>
+                        </a>
+                    </li>
+                                                
+                </ul>
+            </div>
+        </div>
+    </nav>
+ </div>
+
+  <div class="add-on-information mt-5">
+    <div class="container-fluid" style="margin-top: 4em;margin-bottom:0;background-image:url({% static 'images/blog-background.jpg' %});background-attachment:fixed;opacity:0.8;background-repeat:no-repeat;height:fit-content;
+    background-position:center;background-size:cover;">
+        <p class="heading text-center" style="padding-top:2rem;">Our Daily <span class="highlight">Articles. </span>
+        </p>
+        <div class="row">
+            {% for i in data %}
+            <div class="col-sm-4 mb-3 mb-sm-0 mt-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title blog-title">{{i.title}}
+                        </h5>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="by-date">By <a href="">{{i.author}}</a></p>
+                            </div>
+                            <div class="col-sm-6">
+                                <li class="by-date">{{i.Pub_date}}</li>
+                            </div>
+                        </div>
+                        <p class="card-text" >{{i.description|safe|slice:"0:90"}}
+                        </p>
+                        <a href="{% url 'view_article' i.id  %}" class="btn " style="letter-spacing: 1px;">Read More<ion-icon
+                          name="arrow-forward-outline" class="mt-2 mx-2"></ion-icon> </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

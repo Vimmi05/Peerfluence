@@ -2,3 +2,5 @@ from django.contrib import admin
 from website.models import *
 
 admin.site.register(UserProfile)
+admin.site.register(UserPostModel)
+

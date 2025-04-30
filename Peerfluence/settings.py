@@ -27,6 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["192.168.29.182", "127.0.0.1"]
 
+# settings.py
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-idx-peerfluence-1735994572523.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev',
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website',
     'User',
+    'Article',
     'ckeditor',
     'widget_tweaks',
 ]
